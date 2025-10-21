@@ -19,6 +19,6 @@ Route::middleware('auth')->group(function () {
 });
 
 // トップメニュー画面
-Route::get('/top', [TrainingController::class, 'top'])->name('training.top');
+Route::get('/top', [TrainingController::class, 'index'])->name('training.index');
 
 require __DIR__.'/auth.php';

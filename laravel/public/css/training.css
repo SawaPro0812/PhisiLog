@@ -1,0 +1,156 @@
+body {
+    font-family: 'Segoe UI', 'Hiragino Sans', sans-serif;
+    background-color: #f7f9fb;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== ヘッダー ===== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0048b4;
+    color: #fff;
+    padding: 12px 20px;
+}
+
+.header h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.header a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+/* ===== メインレイアウト ===== */
+.main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ===== カレンダー ===== */
+.calendar-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.month-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.month-header button {
+    background: #0048b4;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.month-header button:hover {
+    background: #003890;
+}
+
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.calendar th {
+    color: #666;
+    font-size: 13px;
+    padding-bottom: 5px;
+}
+
+.calendar td {
+    height: 40px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.calendar td:hover {
+    background-color: #eef3ff;
+}
+
+.today {
+    background-color: #0048b4;
+    color: #fff;
+}
+
+/* ===== 記録テーブル ===== */
+.record-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.record-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.record-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.add-btn {
+    background: #0048b4;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.add-btn:hover {
+    background: #003890;
+}
+
+.record-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.record-table th,
+.record-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.record-table th {
+    background: #f1f3f7;
+    font-size: 14px;
+}
+
+.record-table td {
+    font-size: 14px;
+}
