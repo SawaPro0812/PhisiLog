@@ -6,7 +6,7 @@ services:
       - ./docker/mysql/data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=mysql
-      - MYSQL_DATABASE=database
+      - MYSQL_DATABASE=phisilog
       - TZ=Asia/Tokyo
     ports:
       - "3306:3306"
@@ -14,7 +14,9 @@ services:
 
   # アプリ（※ Dockerfile は php:8.x-apache ベース想定）
   app:
-    build: ./docker/php
+    build:
+      context: ./laravel
+      dockerfile: ../docker/php/Dockerfile
     volumes:
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
       - ./laravel:/var/www

@@ -1,8 +1,57 @@
+# ============================================
+# OS / エディタ関連
+# ============================================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# ============================================
+# Node / npm
+# ============================================
+/node_modules/
+/public/build/
+/npm-debug.log
+/yarn-error.log
+package-lock.json
+
+# ============================================
+# PHP / Composer
+# ============================================
+/vendor/
+/composer.lock
+/.phpunit.result.cache
+
+# ============================================
+# Laravel 環境関連
+# ============================================
 .env
-/vendor
-/node_modules
+.env.*
 /storage/logs/*.log
 /storage/framework/cache/*
 /storage/framework/sessions/*
 /storage/framework/views/*
-/docker/mysql/data
+/storage/debugbar/*
+/bootstrap/cache/*.php
+
+# ============================================
+# Docker / 環境構築
+# ============================================
+/docker/mysql/data/
+/docker/mysql/logs/
+/docker/php/php.ini
+/docker/php/conf.d/
+/docker/.DS_Store
+/docker/mysql/.DS_Store
+/docker/php/.DS_Store
+docker-compose.override.yml
+*.pid
+
+# ============================================
+# OSゴミファイル
+# ============================================
+**/.DS_Store
+**/.AppleDouble
+**/._*
