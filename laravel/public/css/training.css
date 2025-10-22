@@ -100,6 +100,11 @@ body {
     color: #fff;
 }
 
+.prev-month,
+.next-month {
+    color: #bbb;
+}
+
 /* ===== 記録テーブル ===== */
 .record-section {
     background: #fff;
