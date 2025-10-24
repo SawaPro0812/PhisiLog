@@ -141,6 +141,6 @@ function transionInsert() {
         return;
     }
 
-    const url = `/workouts/create?date=${encodeURIComponent(date)}&exercise_id=${encodeURIComponent(exerciseId)}`;
+    const url = `/workout/create?date=${encodeURIComponent(date)}&exercise_id=${encodeURIComponent(exerciseId)}`;
     window.location.href = url;
 }

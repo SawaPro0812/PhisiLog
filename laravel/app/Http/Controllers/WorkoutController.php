@@ -7,7 +7,7 @@ use Illuminate\View\View;
 use App\Services\CommonService;
 use Illuminate\Support\Facades\Auth;
 
-class TrainingController extends Controller
+class WorkoutController extends Controller
 {
     protected $service;
 

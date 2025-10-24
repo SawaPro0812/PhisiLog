@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\WorkoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +19,6 @@ Route::middleware('auth')->group(function () {
 });
 
 // トップメニュー画面
-Route::get('/top', [TrainingController::class, 'index'])->name('training.index');
+Route::get('/top', [WorkoutController::class, 'index'])->name('workout.index');
 
 require __DIR__.'/auth.php';
