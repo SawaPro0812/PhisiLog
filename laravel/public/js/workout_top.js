@@ -4,6 +4,10 @@
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth() + 1;
 
+// URLパラメータから選択日を取得
+const params = new URLSearchParams(window.location.search);
+let selectedDateFromUrl = params.get("date");
+
 $(function(){
     // カレンダー初期表示
     createCalendar(currentYear, currentMonth);
@@ -92,8 +96,15 @@ function createCalendar(year, month) {
                 // 当月部分
                 $cell.text(dayCount);
 
-                // 今日の場合のみクラス追加
-                if (
+                // URL指定がある場合はその日を優先して選択表示
+                const thisDate = `${year}/${String(month).padStart(2,"0")}/${String(dayCount).padStart(2,"0")}`;
+                if (selectedDateFromUrl && normalizeDate(selectedDateFromUrl) === normalizeDate(thisDate)) {
+                    showWorkOut($cell);
+                    $cell.addClass("today");
+                }
+                // URL指定がない場合のみ今日をハイライト
+                else if (
+                    !selectedDateFromUrl &&
                     dayCount === today.getDate() &&
                     month === today.getMonth() + 1 &&
                     year === today.getFullYear()
@@ -106,6 +117,7 @@ function createCalendar(year, month) {
         }
     }
 }
+
 // ===============================================
 // カレンダー日付クリック → トレーニング記録表示変更
 // ===============================================
@@ -117,12 +129,12 @@ function showWorkOut($cell) {
     $(".calendar tbody td").removeClass("today");
     $cell.addClass("today");
 
-    const workDate = String(currentMonth).padStart(2, "0") + "年" + String(day).padStart(2, "0") + "日の記録";
+    const workDate = String(currentMonth).padStart(2, "0") + "月" + String(day).padStart(2, "0") + "日の記録";
     $("#work-date-h3").text(workDate);
 }
 
 // ===============================================
-// カレンダー日付クリック → トレーニング記録表示変更
+// モーダル表示
 // ===============================================
 function showModal() {
     // モーダルを表示
@@ -141,6 +153,13 @@ function transionInsert() {
         return;
     }
 
-    const url = `/workout/create?date=${encodeURIComponent(date)}&exercise_id=${encodeURIComponent(exerciseId)}`;
+    const url = `/workouts/create?date=${encodeURIComponent(date)}&exercise_id=${encodeURIComponent(exerciseId)}`;
     window.location.href = url;
+}
+
+// ===============================================
+//  日付フォーマット統一用関数（2025-10-24 → 2025/10/24）
+// ===============================================
+function normalizeDate(str) {
+    return str.replace(/-/g, "/");
 }
