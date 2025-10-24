@@ -5,6 +5,7 @@ let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth() + 1;
 
 $(function(){
+    // カレンダー初期表示
     createCalendar(currentYear, currentMonth);
 
     // 前月ボタン
@@ -25,6 +26,21 @@ $(function(){
             currentYear++;
         }
         createCalendar(currentYear, currentMonth);
+    });
+
+    // カレンダー日付クリック
+    $(".calendar td:not(.prev-month):not(.next-month)").on("click", function() {
+        showWorkOut($(this));
+    });
+
+    // モーダル表示
+    $(".add-btn").on("click", function() {
+        showModal($(this));
+    });
+
+    // 登録画面へ遷移
+    $(document).on("click", "#nextButton", function() {
+        transionInsert();
     });
 });
 
@@ -82,10 +98,49 @@ function createCalendar(year, month) {
                     month === today.getMonth() + 1 &&
                     year === today.getFullYear()
                 ) {
+                    showWorkOut($cell);
                     $cell.addClass("today");
                 }
                 dayCount++;
             }
         }
     }
+}
+// ===============================================
+// カレンダー日付クリック → トレーニング記録表示変更
+// ===============================================
+function showWorkOut($cell) {
+    // 日付を取得
+    const day = $($cell).text();
+    const selectedDate = `${currentYear}/${String(currentMonth).padStart(2, "0")}/${String(day).padStart(2, "0")}`;
+    $("#work-date").val(selectedDate);
+    $(".calendar tbody td").removeClass("today");
+    $cell.addClass("today");
+
+    const workDate = String(currentMonth).padStart(2, "0") + "年" + String(day).padStart(2, "0") + "日の記録";
+    $("#work-date-h3").text(workDate);
+}
+
+// ===============================================
+// カレンダー日付クリック → トレーニング記録表示変更
+// ===============================================
+function showModal() {
+    // モーダルを表示
+    $("#exerciseModal").modal("show");
+}
+
+// ===============================================
+// 「追加」ボタン → 詳細登録画面へ遷移
+// ===============================================
+function transionInsert() {
+    const date = $("#work-date").val();
+    const exerciseId = $("#exercise").val();
+
+    if (!exerciseId) {
+        alert("種目を選択してください。");
+        return;
+    }
+
+    const url = `/workouts/create?date=${encodeURIComponent(date)}&exercise_id=${encodeURIComponent(exerciseId)}`;
+    window.location.href = url;
 }
