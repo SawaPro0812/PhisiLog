@@ -8,7 +8,7 @@
     {{-- Bootstrap（モーダルに必要） --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('css/training.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/workout_top.css') }}">
 </head>
 <body>
     <header class="header">
@@ -102,6 +102,6 @@
     {{-- JS類は末尾に移動（確実に動作させるため） --}}
     <script src="{{ asset('js/lib/jquery-3.7.1.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/training_top.js') }}"></script>
+    <script src="{{ asset('js/workout_top.js') }}"></script>
 </body>
 </html>

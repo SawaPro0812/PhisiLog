@@ -8,11 +8,14 @@ class CommonService
 
     public function __construct(
         ExerciseService $exerciseService,
+        WorkoutService $workoutService,
     )
     {
         $this->exerciseService = $exerciseService;
+        $this->workoutService = $workoutService;
     }
     
+    // トップ画面のデータ取得
     public function getTopData($userId)
     {
         return [
@@ -20,5 +23,18 @@ class CommonService
             'exercises' => $this->exerciseService->getAllByUser($userId),
             //'workouts' => $this->workoutService->getRecentByUser($userId),
         ];
+    }
+
+    // ワークアウト登録画面のデータ取得
+    public function getCreateData($exerciseId)
+    {
+        return $this->exerciseService->getExercise($exerciseId);
+    }
+
+    // ワークアウト登録処理
+    public function createWorkout($data)
+    {
+        $this->workoutService->createWorkout($data);
+        return;
     }
 }
