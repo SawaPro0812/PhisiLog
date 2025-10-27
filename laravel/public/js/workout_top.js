@@ -46,6 +46,12 @@ $(function(){
     $(document).on("click", "#nextButton", function() {
         transionInsert();
     });
+
+    // ワークアウト編集
+    $(document).on("click", ".record-table tbody tr", function() {
+        // TODO
+        alert("todo:編集画面へ遷移");
+    });
 });
 
 // ===============================================
@@ -121,7 +127,7 @@ function createCalendar(year, month) {
 // ===============================================
 // カレンダー日付クリック → トレーニング記録表示変更
 // ===============================================
-function showWorkOut($cell) {
+async function showWorkOut($cell) {
     // 日付を取得
     const day = $($cell).text();
     const selectedDate = `${currentYear}/${String(currentMonth).padStart(2, "0")}/${String(day).padStart(2, "0")}`;
@@ -131,6 +137,15 @@ function showWorkOut($cell) {
 
     const workDate = String(currentMonth).padStart(2, "0") + "月" + String(day).padStart(2, "0") + "日の記録";
     $("#work-date-h3").text(workDate);
+
+    // ワークアウト履歴取得
+    try {
+        // ✅ awaitで共通関数呼び出し
+        const res = await ajaxGet("/workouts/by-date", { date: selectedDate });
+        updateWorkoutTable(res);
+    } catch (e) {
+        alert("トレーニング履歴の取得に失敗しました。");
+    }
 }
 
 // ===============================================
@@ -162,4 +177,30 @@ function transionInsert() {
 // ===============================================
 function normalizeDate(str) {
     return str.replace(/-/g, "/");
+}
+
+
+// ===============================================
+//  ワークアウト履歴表示更新
+// ===============================================
+function updateWorkoutTable(data) {
+    const $tbody = $(".record-table tbody");
+    $tbody.empty();
+
+    if (!data.length) {
+        $tbody.append(`<tr><td colspan="4">この日の記録はありません</td></tr>`);
+        return;
+    }
+
+    data.forEach((w) => {
+        const exerciseName = w.exercise_name ? w.exercise_name : "不明な種目";
+        $tbody.append(`
+            <tr>
+                <td>${exerciseName}</td>
+                <td>${w.sets.toLocaleString()} セット</td>
+                <td>${w.total_weight.toLocaleString()} kg</td>
+                <td>></td>
+            </tr>
+        `);
+    });
 }

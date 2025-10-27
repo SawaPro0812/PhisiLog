@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
 
 // トップメニュー画面
 Route::get('/workouts/top', [WorkoutController::class, 'index'])->name('workouts.index');
+// ワークアウト履歴取得
+Route::get('/workouts/by-date', [WorkoutController::class, 'getByDate'])->name('workouts.getByDate');
 // ワークアウト登録画面
 Route::get('/workouts/create', [WorkoutController::class, 'create'])->name('workouts.create');
 // ワークアウト登録処理

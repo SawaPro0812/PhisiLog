@@ -37,4 +37,9 @@ class CommonService
         $this->workoutService->createWorkout($data);
         return;
     }
+
+    // ワークアウト履歴取得（日付）
+    public function getByDate($param) {
+        return $this->workoutService->getByDate($param);
+    }
 }

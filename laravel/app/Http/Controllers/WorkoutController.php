@@ -46,7 +46,7 @@ class WorkoutController extends Controller
     public function store(Request $request)
     {
         $userId = Auth::id();
-        $data = [
+        $param = [
             'userId' => $userId,
             'exerciseId' => $request->exercise_id,
             'sets' => $request->sets,
@@ -54,7 +54,24 @@ class WorkoutController extends Controller
             'date' => $request->date
         ];
 
-        $data = $this->service->createWorkout($data);
+        $data = $this->service->createWorkout($param);
         return redirect()->route('workouts.index', ['date' => $request->date]);
+    }
+
+    // ワークアウト履歴取得
+    public function getByDate(Request $request)
+    {
+        $userId = Auth::id();
+        $param = [
+            'userId' => $userId,
+            'date' => $request->date,
+        ];
+
+        $data = $this->service->getByDate($param);
+
+        $workouts = [
+            'test' => 'test'
+        ];
+        return response()->json($data);
     }
 }

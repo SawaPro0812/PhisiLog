@@ -55,13 +55,15 @@
                         <th>種目</th>
                         <th>セット数</th>
                         <th>総重量</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>ベンチプレス</td>
-                        <td>3</td>
-                        <td>1960 kg</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -102,6 +104,7 @@
     {{-- JS類は末尾に移動（確実に動作させるため） --}}
     <script src="{{ asset('js/lib/jquery-3.7.1.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/common.js') }}"></script>
     <script src="{{ asset('js/workout_top.js') }}"></script>
 </body>
 </html>
