@@ -91,13 +91,19 @@ body {
     transition: 0.2s;
 }
 
+/* TODO PC版はホバーあり スマホ版はホバーなし
 .calendar td:hover {
     background-color: #eef3ff;
-}
+} */
 
 .today {
     background-color: #0048b4;
     color: #fff;
+}
+
+.prev-month,
+.next-month {
+    color: #bbb;
 }
 
 /* ===== 記録テーブル ===== */
