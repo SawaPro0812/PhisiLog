@@ -66,7 +66,7 @@ class WorkoutController extends Controller
             'userId' => $userId,
             'date' => $request->date,
         ];
-
+        
         $data = $this->service->getByDate($param);
 
         $workouts = [

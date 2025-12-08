@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\ExerciseTemplate;
+use App\Models\UserExercise;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,6 +43,18 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $templates = ExerciseTemplate::get();
+        $rows = $templates->map(function ($temp) use ($user) {
+            return [
+                'user_id' => $user->id,
+                'name' => $temp->name,
+                'category' => $temp->category,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        })->all();
+
+        UserExercise::insert($rows);
         event(new Registered($user));
 
         Auth::login($user);

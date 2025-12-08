@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Exercise;
+use App\Models\UserExercise;
 
 class ExerciseService
 {
@@ -13,13 +13,13 @@ class ExerciseService
 
     // ユーザのトレーニングメニューを取得する
     public function getAllByUser($userId) {
-        $exercises = Exercise::where('user_id', $userId)->get();
+        $exercises = UserExercise::where('user_id', $userId)->get();
         return $exercises;
     }
 
     // 種目を取得する
     public function getExercise($exerciseId) {
-        $exercise = Exercise::where('id', $exerciseId)->first();
+        $exercise = UserExercise::where('id', $exerciseId)->first();
         return $exercise;
     }
 }
