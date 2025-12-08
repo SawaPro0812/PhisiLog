@@ -19,7 +19,7 @@ class Workout extends Model
     ];
 
     public function exercise() {
-        return $this->belongsTo(Exercise::class);
+        return $this->belongsTo(UserExercise::class);
     }
 
     public function getByDate($param) {

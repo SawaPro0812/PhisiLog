@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exercises', function (Blueprint $table) {
+        Schema::create('exercise_templates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('category')->nullable();
             $table->timestamps();
-
-            // 外部キー制約（ユーザー削除時にメニューも削除したい場合）
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exercises');
+        Schema::dropIfExists('exercise_templates');
     }
 };
