@@ -42,4 +42,23 @@ class CommonService
     public function getByDate($param) {
         return $this->workoutService->getByDate($param);
     }
+
+    // ワークアウト編集画面のデータ取得
+    public function getWorkoutData($param)
+    {
+        return $this->workoutService->getWorkoutData($param);
+    }
+
+    // 種目取得
+    public function getExercise($param)
+    {
+        return $this->workoutService->getWorkoutData($param);
+    }
+
+    // ワークアウト編集処理
+    public function updateWorkout($data)
+    {
+        $this->workoutService->updateWorkout($data);
+        return;
+    }
 }

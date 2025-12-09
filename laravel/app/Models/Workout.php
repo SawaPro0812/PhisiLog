@@ -18,14 +18,23 @@ class Workout extends Model
         'memo'
     ];
 
-    public function exercise() {
-        return $this->belongsTo(UserExercise::class);
+    public function userExercise() {
+        return $this->belongsTo(UserExercise::class, 'exercise_id');
     }
 
     public function getByDate($param) {
-        return Workout::with('exercise')
+        return Workout::with('userExercise')
             ->where('user_id', $param['userId'])
             ->whereDate('date', $param['date'])
+            ->orderBy('exercise_id')
+            ->get();
+    }
+
+    public function getWorkoutByUserAndDate($param) {
+        return Workout::with('userExercise')
+            ->where('user_id', $param['userId'])
+            ->whereDate('date', $param['date'])
+            ->where('exercise_id', $param['exerciseId'])
             ->orderBy('exercise_id')
             ->get();
     }

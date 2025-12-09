@@ -26,5 +26,9 @@ Route::get('/workouts/by-date', [WorkoutController::class, 'getByDate'])->name('
 Route::get('/workouts/create', [WorkoutController::class, 'create'])->name('workouts.create');
 // ワークアウト登録処理
 Route::post('/workouts/store', [WorkoutController::class, 'store'])->name('workouts.store');
+// ワークアウト編集画面
+Route::get('/workouts/edit', [WorkoutController::class, 'edit'])->name('workouts.edit');
+// ワークアウト更新処理
+Route::post('/workouts/update', [WorkoutController::class, 'update'])->name('workouts.update');
 
 require __DIR__.'/auth.php';

@@ -15,11 +15,12 @@
 
     <main class="main">
         <section class="set-section">
+            <h2>{{ $data['exercise']->name }}</h2>
             <form id="workoutForm" method="POST" action="{{ route('workouts.store') }}">
                 @csrf
                 <input type="hidden" name="date" value="{{ $data['date'] ?? '' }}">
                 <input type="hidden" name="exercise_id" value="{{ $data['exercise']->id ?? '' }}">
-
+                <div> {{ isset($data['date']) ? \Carbon\Carbon::parse($data['date'])->format('Y年m月d日') : '' }}</div>
                 <div id="set-list">
                     <div class="set-row">
                         <label class="set-label">セット 1</label>

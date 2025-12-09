@@ -50,7 +50,7 @@ $(function(){
     // ワークアウト編集
     $(document).on("click", ".record-table tbody tr", function() {
         // TODO
-        alert("todo:編集画面へ遷移");
+        transionEdit($(this));
     });
 });
 
@@ -173,6 +173,16 @@ function transionInsert() {
 }
 
 // ===============================================
+// トレーニング履歴行 → 編集画面へ遷移
+// ===============================================
+function transionEdit($row) {
+    const date = $("#work-date").val();
+    const exerciseId = $row.find('input[type="hidden"]').val();
+    const url = `/workouts/edit?date=${encodeURIComponent(date)}&exercise_id=${encodeURIComponent(exerciseId)}`;
+    window.location.href = url;
+}
+
+// ===============================================
 //  日付フォーマット統一用関数（2025-10-24 → 2025/10/24）
 // ===============================================
 function normalizeDate(str) {
@@ -200,6 +210,7 @@ function updateWorkoutTable(data) {
                 <td>${w.sets.toLocaleString()} セット</td>
                 <td>${w.total_weight.toLocaleString()} kg</td>
                 <td>></td>
+                <input type="hidden" value=${w.exercise_id}>
             </tr>
         `);
     });
