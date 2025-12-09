@@ -74,4 +74,42 @@ class WorkoutController extends Controller
         ];
         return response()->json($data);
     }
+
+    // ワークアウト編集画面表示
+    public function edit(Request $request): View
+    {
+        $userId = Auth::id();
+        $param = [
+            'userId' => $userId,
+            'date' => $request->date,
+            'exerciseId' => $request->exercise_id
+        ];
+        
+        $data = [
+            'workout' => $this->service->getWorkoutData($param),
+            'exercise' => $this->service->getCreateData($request->exercise_id),
+            'date' => $request->date
+        ];
+
+        return view('workouts.edit', [
+            'data' => $data
+        ]);
+    }
+
+    // ワークアウト更新処理
+    public function update(Request $request)
+    {
+        $userId = Auth::id();
+        $param = [
+            'userId' => $userId,
+            'exerciseId' => $request->exercise_id,
+            'sets' => $request->sets,
+            'memo' => $request->memo,
+            'date' => $request->date
+        ];
+
+        $data = $this->service->updateWorkout($param);
+        return redirect()->route('workouts.index', ['date' => $request->date]);
+    }
+
 }
