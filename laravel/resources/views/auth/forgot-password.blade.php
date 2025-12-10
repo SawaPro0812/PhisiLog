@@ -1,25 +1,68 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physilog - パスワード再設定</title>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+</head>
+<body>
+    <header class="header">
+        <h1>Physilog</h1>
+    </header>
 
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
+    <main class="main">
+        <section class="auth-card">
+            <h2 class="auth-title">パスワード再設定</h2>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <p class="auth-description">
+                登録しているメールアドレスを入力してください。<br>
+                パスワード再設定用のリンクをメールでお送りします。
+            </p>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            {{-- セッションステータス（送信完了メッセージなど） --}}
+            @if (session('status'))
+                <div class="auth-status">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            {{-- バリデーションエラー --}}
+            @if ($errors->any())
+                <div class="auth-error">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('password.email') }}">
+                @csrf
+
+                <div class="form-group">
+                    <label for="email">メールアドレス</label>
+                    <input id="email"
+                           type="email"
+                           name="email"
+                           value="{{ old('email') }}"
+                           required
+                           autofocus>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="auth-submit-btn">
+                        パスワード再設定メールを送信
+                    </button>
+                </div>
+
+                <div class="form-footer">
+                    <a href="{{ route('login') }}" class="link-small">ログイン画面へ戻る</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
