@@ -1,0 +1,151 @@
+/* ベース（workout_top.css と同じテイスト） */
+body {
+    font-family: 'Segoe UI', 'Hiragino Sans', sans-serif;
+    background-color: #f7f9fb;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* ヘッダー（既存の .header と同じ） */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0048b4;
+    color: #fff;
+    padding: 12px 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.header nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* main は中央寄せレイアウトに */
+.main {
+    max-width: 430px;          /* iPhone 幅イメージ */
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+/* ログインカード */
+.auth-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 20px 28px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.auth-title {
+    margin: 0 0 16px;
+    font-size: 18px;
+}
+
+/* フォーム */
+.form-group {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.form-group input {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #d0d5dd;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #0048b4;
+    box-shadow: 0 0 0 1px rgba(0,72,180,0.15);
+}
+
+/* エラー表示 */
+.auth-error {
+    background: #ffe5e5;
+    color: #a00000;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+    font-size: 12px;
+}
+
+.auth-error ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+/* 下段の「Remember me」「パスワード忘れ」 */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0 16px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    gap: 4px;
+}
+
+.remember-me input {
+    margin: 0;
+}
+
+.link-small {
+    font-size: 12px;
+    color: #0048b4;
+    text-decoration: none;
+}
+
+.link-small:hover {
+    text-decoration: underline;
+}
+
+/* ボタン */
+.form-actions {
+    margin-top: 8px;
+}
+
+.auth-submit-btn {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 0;
+    background: #0048b4;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.auth-submit-btn:hover {
+    background: #003890;
+}
+
+/* フッターの「新規登録」リンク */
+.form-footer {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.form-footer span {
+    margin-right: 4px;
+}
