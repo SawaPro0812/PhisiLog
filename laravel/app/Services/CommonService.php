@@ -61,4 +61,28 @@ class CommonService
         $this->workoutService->updateWorkout($data);
         return;
     }
+
+    // 種目取得（ユーザに紐づく）
+    public function getExerciseByUser($userId)
+    {
+        return $this->exerciseService->getAllByUser($userId);
+    }
+
+    // 種目登録（ユーザに紐づく）
+    public function createExercise($param)
+    {
+        return $this->exerciseService->createExercise($param);
+    }
+
+    // 種目更新
+    public function updateExercise($param)
+    {
+        return $this->exerciseService->updateExercise($param);
+    }
+
+    // 種目削除
+    public function deleteExercise($param)
+    {
+        return $this->exerciseService->deleteExercise($param);
+    }
 }

@@ -1,0 +1,40 @@
+
+/* フッターナビ */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    max-width: 430px;          /* スマホ幅 */
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+    padding: 8px 0;
+
+    font-size: 14px;
+    z-index: 50;
+}
+
+.footer-item {
+    flex: 1;
+    text-align: center;
+    padding: 6px 0;
+    color: #555;
+    text-decoration: none;
+}
+
+.footer-item.active {
+    color: #0048b4;
+    font-weight: bold;
+}
+
+/* フッター分だけ下に余白確保（content が隠れないように） */
+.main {
+    padding-bottom: 60px; /* フッター高さぶん少し多めに */
+}

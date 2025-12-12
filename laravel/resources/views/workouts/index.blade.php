@@ -9,13 +9,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/workout_top.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/common.css') }}">
 </head>
 <body>
     <header class="header">
         <h1>Physilog</h1>
-        <nav>
-            <a href="#">ユーザ設定</a>
-        </nav>
     </header>
 
     <main class="main">
@@ -100,6 +98,8 @@
             </div>
         </section>
     </main>
+
+    @include('layouts.footer')
 
     {{-- JS類は末尾に移動（確実に動作させるため） --}}
     <script src="{{ asset('js/lib/jquery-3.7.1.min.js') }}"></script>
