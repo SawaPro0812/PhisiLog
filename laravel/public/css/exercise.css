@@ -1,0 +1,229 @@
+/* 種目画面専用レイアウトの微調整 */
+.main-exercise {
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 16px;
+    padding-bottom: 72px; /* フッターぶん余白 */
+}
+
+/* タイトル行 ＋ 追加ボタン */
+.exercise-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.exercise-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.exercise-add-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: none;
+    background: #0048b4;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* セクション共通 */
+.exercise-section {
+    margin-bottom: 12px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 12px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+/* カテゴリタブ */
+.exercise-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.exercise-tab {
+    border: none;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 13px;
+    background: #eef3ff;
+    color: #333;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.exercise-tab.is-active {
+    background: #0048b4;
+    color: #fff;
+}
+
+/* 種目リスト */
+.exercise-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.exercise-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 4px;
+    border-bottom: 1px solid #f0f2f5;
+    cursor: pointer;
+}
+
+.exercise-item:last-child {
+    border-bottom: none;
+}
+
+.exercise-color-bar {
+    width: 3px;
+    height: 20px;
+    border-radius: 999px;
+    background: #22c55e; /* シンプルなアクセントカラー */
+}
+
+.exercise-name {
+    font-size: 15px;
+}
+
+/* タップ時の軽いフィードバック */
+.exercise-item:active {
+    background: #f2f5ff;
+}
+
+/* ===== モーダル ===== */
+.exercise-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.exercise-modal-overlay.is-open {
+    display: flex;
+}
+
+.exercise-modal {
+    width: 90%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 16px 12px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3);
+}
+
+.exercise-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.exercise-modal-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.exercise-modal-close {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.exercise-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.exercise-modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.exercise-modal-field label {
+    font-size: 13px;
+}
+
+.exercise-input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #d0d5dd;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.exercise-input:focus {
+    outline: none;
+    border-color: #0048b4;
+    box-shadow: 0 0 0 1px rgba(0, 72, 180, 0.12);
+}
+
+.exercise-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.exercise-modal-cancel {
+    border: none;
+    background: #e5e7eb;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.exercise-modal-submit {
+    border: none;
+    background: #0048b4;
+    color: #fff;
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.exercise-primary-btn {
+    width: 100%;
+    height: 48px;
+    background: #356df3;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.exercise-delete-btn {
+    width: 100%;
+    height: 40px;               /* ← 少し小さく */
+    margin-top: 12px;
+    background: #f2f3f5;        /* ← グレー */
+    color: #d9534f;             /* ← 赤文字 */
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+}

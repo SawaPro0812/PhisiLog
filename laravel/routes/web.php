@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkoutController;
+use App\Http\Controllers\ExerciseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,5 +31,15 @@ Route::post('/workouts/store', [WorkoutController::class, 'store'])->name('worko
 Route::get('/workouts/edit', [WorkoutController::class, 'edit'])->name('workouts.edit');
 // ワークアウト更新処理
 Route::post('/workouts/update', [WorkoutController::class, 'update'])->name('workouts.update');
+
+// 種目登録画面
+Route::get('/exercises/create', [ExerciseController::class, 'create'])->name('exercises.create');
+// 種目登録処理
+Route::post('/exercises/store', [ExerciseController::class, 'store'])->name('exercises.store');
+// 種目更新処理
+Route::post('/exercises/update', [ExerciseController::class, 'update'])->name('exercises.update');
+// 種目削除処理
+Route::post('/exercises/delete', [ExerciseController::class, 'delete'])->name('exercises.delete');
+
 
 require __DIR__.'/auth.php';

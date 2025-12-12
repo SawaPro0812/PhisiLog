@@ -92,7 +92,7 @@ class WorkoutController extends Controller
         ];
 
         return view('workouts.edit', [
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -111,5 +111,4 @@ class WorkoutController extends Controller
         $data = $this->service->updateWorkout($param);
         return redirect()->route('workouts.index', ['date' => $request->date]);
     }
-
 }
