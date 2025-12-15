@@ -10,7 +10,7 @@
         種目
     </a>
 
-    <a href=""
+    <a href="{{ route('settings.index') }}"
        class="footer-item {{ request()->routeIs('settings.*') ? 'active' : '' }}">
         設定
     </a>

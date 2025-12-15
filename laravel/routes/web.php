@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,5 +42,7 @@ Route::post('/exercises/update', [ExerciseController::class, 'update'])->name('e
 // 種目削除処理
 Route::post('/exercises/delete', [ExerciseController::class, 'delete'])->name('exercises.delete');
 
+// 設定画面
+Route::get('/settings/index', [SettingController::class, 'index'])->name('settings.index');
 
 require __DIR__.'/auth.php';
