@@ -19,22 +19,41 @@ $(function(){
             currentMonth = 12;
             currentYear--;
         }
+
+        // ✅ 月移動時はURL選択を無効化（ボタン操作を優先）
+        selectedDateFromUrl = null;
+
         createCalendar(currentYear, currentMonth);
+        selectDefaultDateForCurrentMonth(); // ✅ 1日 or 今日
     });
 
-    // 次月ボタン（必要なら）
+    // 次月ボタン
     $("#next-month").on("click", function() {
         currentMonth++;
         if (currentMonth > 12) {
             currentMonth = 1;
             currentYear++;
         }
+
+        // ✅ 月移動時はURL選択を無効化（ボタン操作を優先）
+        selectedDateFromUrl = null;
+
         createCalendar(currentYear, currentMonth);
+        selectDefaultDateForCurrentMonth(); // ✅ 1日 or 今日
     });
 
-    // カレンダー日付クリック
-    $(".calendar td:not(.prev-month):not(.next-month)").on("click", function() {
-        showWorkOut($(this));
+    // ✅ カレンダー日付クリック（イベント委譲で不具合修正）
+    // prev-month / next-month はクリック無効のまま
+    $(document).on("click", ".calendar td", function() {
+        const $cell = $(this);
+
+        // 空セルは無視
+        if (!$cell.text()) return;
+
+        // 前月/翌月セルはクリック不可
+        if ($cell.hasClass("prev-month") || $cell.hasClass("next-month")) return;
+
+        showWorkOut($cell);
     });
 
     // モーダル表示
@@ -49,7 +68,6 @@ $(function(){
 
     // ワークアウト編集
     $(document).on("click", ".record-table tbody tr", function() {
-        // TODO
         transionEdit($(this));
     });
 });
@@ -58,7 +76,6 @@ $(function(){
 // カレンダー表示
 // ===============================================
 function createCalendar(year, month) {
-    const date = new Date(year, month - 1);
     const today = new Date();
 
     // 月の最初と最後の日を取得
@@ -94,7 +111,7 @@ function createCalendar(year, month) {
                 continue;
             }
 
-            if (dayCount > endDayCount) { 
+            if (dayCount > endDayCount) {
                 // 翌月部分
                 $cell.text(nextMonthDayCount).addClass("next-month");
                 nextMonthDayCount++;
@@ -102,13 +119,13 @@ function createCalendar(year, month) {
                 // 当月部分
                 $cell.text(dayCount);
 
-                // URL指定がある場合はその日を優先して選択表示
+                // ✅ 初期表示時のみ：URL指定があればその日を選択して表示
                 const thisDate = `${year}/${String(month).padStart(2,"0")}/${String(dayCount).padStart(2,"0")}`;
                 if (selectedDateFromUrl && normalizeDate(selectedDateFromUrl) === normalizeDate(thisDate)) {
                     showWorkOut($cell);
                     $cell.addClass("today");
                 }
-                // URL指定がない場合のみ今日をハイライト
+                // ✅ URL指定がない場合のみ：今日をハイライト（初期表示用）
                 else if (
                     !selectedDateFromUrl &&
                     dayCount === today.getDate() &&
@@ -118,6 +135,7 @@ function createCalendar(year, month) {
                     showWorkOut($cell);
                     $cell.addClass("today");
                 }
+
                 dayCount++;
             }
         }
@@ -125,13 +143,46 @@ function createCalendar(year, month) {
 }
 
 // ===============================================
+// ✅ 月変更時に選択するデフォルト日付
+// - 当月（今日の年月）なら「今日」
+// - それ以外なら「1日」
+// ===============================================
+function selectDefaultDateForCurrentMonth() {
+    const today = new Date();
+    const isThisMonth =
+        currentYear === today.getFullYear() &&
+        currentMonth === (today.getMonth() + 1);
+
+    const targetDay = isThisMonth ? today.getDate() : 1;
+    selectDayInCurrentMonth(targetDay);
+}
+
+// ===============================================
+// ✅ 現在表示中の当月セルから「day」を探して選択する
+// （なければ何もしない）
+// ===============================================
+function selectDayInCurrentMonth(day) {
+    const $target = $(".calendar td:not(.prev-month):not(.next-month)").filter(function() {
+        return parseInt($(this).text(), 10) === day;
+    }).first();
+
+    if ($target.length) {
+        showWorkOut($target);
+    }
+}
+
+// ===============================================
 // カレンダー日付クリック → トレーニング記録表示変更
 // ===============================================
 async function showWorkOut($cell) {
+    // ✅ ユーザーが操作したらURL指定は解除（以後の自動選択を防ぐ）
+    selectedDateFromUrl = null;
+
     // 日付を取得
     const day = $($cell).text();
     const selectedDate = `${currentYear}/${String(currentMonth).padStart(2, "0")}/${String(day).padStart(2, "0")}`;
     $("#work-date").val(selectedDate);
+
     $(".calendar tbody td").removeClass("today");
     $cell.addClass("today");
 
@@ -140,7 +191,6 @@ async function showWorkOut($cell) {
 
     // ワークアウト履歴取得
     try {
-        // ✅ awaitで共通関数呼び出し
         const res = await ajaxGet("/workouts/by-date", { date: selectedDate });
         updateWorkoutTable(res);
     } catch (e) {
@@ -152,7 +202,6 @@ async function showWorkOut($cell) {
 // モーダル表示
 // ===============================================
 function showModal() {
-    // モーダルを表示
     $("#exerciseModal").modal("show");
 }
 
@@ -188,7 +237,6 @@ function transionEdit($row) {
 function normalizeDate(str) {
     return str.replace(/-/g, "/");
 }
-
 
 // ===============================================
 //  ワークアウト履歴表示更新
