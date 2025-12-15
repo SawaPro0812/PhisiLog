@@ -28,7 +28,10 @@
                     <tr>
                         <th style="width: 40%;">アカウント</th>
                         <td style="text-align: right;">
-                            <button class="btn btn-outline-secondary">ログアウト</button>
+                        <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-secondary">ログアウト</button>
+                        </form>
                         </td>
                     </tr>
                 </tbody>
