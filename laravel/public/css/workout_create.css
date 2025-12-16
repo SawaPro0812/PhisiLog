@@ -62,7 +62,7 @@ body {
 .set-label {
     flex: 1;
     font-weight: 600;
-    font-size: 12pt;
+    font-size: 10pt;
 }
 
 .input-weight,
@@ -76,6 +76,13 @@ body {
     margin-right: 3px;
     margin-left: 3px;
     background: #fff;
+}
+
+.input-weight {
+    width: 70px;
+}
+.input-reps {
+    width: 50px;
 }
 
 .set-controls {

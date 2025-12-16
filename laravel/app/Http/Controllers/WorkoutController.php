@@ -34,7 +34,8 @@ class WorkoutController extends Controller
     {
         $data = [
             'exercise' => $this->service->getCreateData($request->exercise_id),
-            'date' => $request->date
+            'date' => $request->date,
+            'memo' => null //ダミー
         ];
 
         return view('workouts.create', [
@@ -85,10 +86,12 @@ class WorkoutController extends Controller
             'exerciseId' => $request->exercise_id
         ];
         
+        $workout = $this->service->getWorkoutData($param);
         $data = [
-            'workout' => $this->service->getWorkoutData($param),
+            'workout' => $workout,
             'exercise' => $this->service->getCreateData($request->exercise_id),
-            'date' => $request->date
+            'date' => $request->date,
+            'memo' => $workout->first()->memo ?? null
         ];
 
         return view('workouts.edit', [

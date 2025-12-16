@@ -28,10 +28,13 @@
                            value="{{ $workout->id }}">
 
                     <input type="number"
+                           step="0.01"
                            name="sets[{{ $index }}][weight]"
                            class="input-weight"
                            placeholder="重量"
                            value="{{ old("sets.$index.weight", $workout->weight) }}"
+                           inputmode="decimal"
+                           pattern="[0-9]*"
                            required> kg
 
                     <input type="number"
@@ -39,6 +42,8 @@
                            class="input-reps"
                            placeholder="回数"
                            value="{{ old("sets.$index.reps", $workout->reps) }}"
+                           inputmode="decimal"
+                           pattern="[0-9]*"
                            required> 回
                 </div>
             @empty
@@ -84,7 +89,7 @@
 
     <div class="memo-section">
         <label for="memo">メモ</label>
-        <textarea name="memo" id="memo" rows="3" placeholder="メモを入力..."></textarea>
+        <textarea name="memo" id="memo" rows="3" placeholder="メモを入力...">{{ $data['memo'] }}</textarea>
     </div>
 
     <div class="submit-area">
