@@ -6,6 +6,7 @@
     <title>Physilog - ログイン</title>
 
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/common.css') }}">
 </head>
 <body>
     <header class="header">

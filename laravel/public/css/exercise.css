@@ -1,9 +1,25 @@
-/* 種目画面専用レイアウトの微調整 */
+/* =========================================
+   Base (exercise)
+   ========================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+    --bg: #f7f9fb;
+    --text: #333;
+    --primary: #0048b4;
+    --primary-hover: #003890;
+    --card: #fff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.1);
+    --radius: 12px;
+    --border: #d0d5dd;
+}
+
+/* 種目画面専用レイアウト（他画面の main と揃える） */
 .main-exercise {
-    max-width: 430px;
+    max-width: 800px;        /* workout_top に寄せて拡張 */
     margin: 0 auto;
     padding: 16px;
-    padding-bottom: 72px; /* フッターぶん余白 */
+    padding-bottom: 72px;    /* フッターぶん余白（common.cssの.mainと別クラスなので残す） */
 }
 
 /* タイトル行 ＋ 追加ボタン */
@@ -16,7 +32,7 @@
 
 .exercise-title {
     margin: 0;
-    font-size: 20px;
+    font-size: 16px;         /* record-header h3 と寄せる */
     font-weight: 600;
 }
 
@@ -25,7 +41,7 @@
     height: 32px;
     border-radius: 999px;
     border: none;
-    background: #0048b4;
+    background: var(--primary);
     color: #fff;
     font-size: 20px;
     line-height: 1;
@@ -33,15 +49,20 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
-/* セクション共通 */
+.exercise-add-btn:hover {
+    background: var(--primary-hover);
+}
+
+/* セクション共通（workout_topのカード感に寄せる） */
 .exercise-section {
     margin-bottom: 12px;
-    background: #fff;
-    border-radius: 12px;
-    padding: 10px 12px;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    background: var(--card);
+    border-radius: 10px; /* 他画面は10pxが多いので寄せる */
+    padding: 12px;
+    box-shadow: var(--shadow);
 }
 
 /* カテゴリタブ */
@@ -58,13 +79,13 @@
     padding: 6px 10px;
     font-size: 13px;
     background: #eef3ff;
-    color: #333;
+    color: var(--text);
     white-space: nowrap;
     cursor: pointer;
 }
 
 .exercise-tab.is-active {
-    background: #0048b4;
+    background: var(--primary);
     color: #fff;
 }
 
@@ -92,11 +113,11 @@
     width: 3px;
     height: 20px;
     border-radius: 999px;
-    background: #22c55e; /* シンプルなアクセントカラー */
+    background: #22c55e;
 }
 
 .exercise-name {
-    font-size: 15px;
+    font-size: 14px; /* workout_top の td font と寄せ */
 }
 
 /* タップ時の軽いフィードバック */
@@ -164,20 +185,21 @@
 
 .exercise-modal-field label {
     font-size: 13px;
+    color: #666;
 }
 
 .exercise-input {
     width: 100%;
-    padding: 8px 10px;
-    border-radius: 6px;
-    border: 1px solid #d0d5dd;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
     font-size: 14px;
-    box-sizing: border-box;
+    background: #fff;
 }
 
 .exercise-input:focus {
     outline: none;
-    border-color: #0048b4;
+    border-color: var(--primary);
     box-shadow: 0 0 0 1px rgba(0, 72, 180, 0.12);
 }
 
@@ -191,17 +213,17 @@
     border: none;
     background: #e5e7eb;
     border-radius: 999px;
-    padding: 6px 14px;
+    padding: 8px 14px;
     font-size: 13px;
     cursor: pointer;
 }
 
 .exercise-modal-submit {
     border: none;
-    background: #0048b4;
+    background: var(--primary);
     color: #fff;
     border-radius: 999px;
-    padding: 6px 16px;
+    padding: 8px 16px;
     font-size: 13px;
     cursor: pointer;
 }
@@ -209,7 +231,7 @@
 .exercise-primary-btn {
     width: 100%;
     height: 48px;
-    background: #356df3;
+    background: var(--primary);
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -219,10 +241,10 @@
 
 .exercise-delete-btn {
     width: 100%;
-    height: 40px;               /* ← 少し小さく */
+    height: 40px;
     margin-top: 12px;
-    background: #f2f3f5;        /* ← グレー */
-    color: #d9534f;             /* ← 赤文字 */
+    background: #f2f3f5;
+    color: #d9534f;
     border: none;
     border-radius: 8px;
     font-size: 14px;

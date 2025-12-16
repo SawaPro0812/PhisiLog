@@ -43,7 +43,7 @@
         <section class="record-section">
             <div class="record-header">
                 <h3 id="work-date-h3"></h3>
-                <button class="add-btn">＋ トレーニング追加</button>
+                <button class="add-btn">＋</button>
                 <input type="hidden" value="" id="work-date">
             </div>
 

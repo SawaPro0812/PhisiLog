@@ -1,46 +1,41 @@
-/* ベース（workout_top.css と同じテイスト） */
+/* =========================================
+   Base (shared)
+   ========================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+    --bg: #f7f9fb;
+    --text: #333;
+    --primary: #0048b4;
+    --primary-hover: #003890;
+    --card: #fff;
+    --border: #d0d5dd;
+    --muted: #666;
+    --shadow: 0 1px 4px rgba(0,0,0,0.08);
+    --radius: 12px;
+}
+
 body {
-    font-family: 'Segoe UI', 'Hiragino Sans', sans-serif;
-    background-color: #f7f9fb;
-    color: #333;
+    font-family: 'Inter', 'Segoe UI', 'Hiragino Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
     margin: 0;
     padding: 0;
 }
 
-/* ヘッダー（既存の .header と同じ） */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #0048b4;
-    color: #fff;
-    padding: 12px 20px;
-}
-
-.header h1 {
-    margin: 0;
-    font-size: 20px;
-}
-
-.header nav a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px;
-}
-
 /* main は中央寄せレイアウトに */
 .main {
-    max-width: 430px;          /* iPhone 幅イメージ */
-    margin: 40px auto;
+    max-width: 430px;
+    margin: 28px auto;
     padding: 0 16px;
 }
 
 /* ログインカード */
 .auth-card {
-    background: #fff;
-    border-radius: 12px;
+    background: var(--card);
+    border-radius: var(--radius);
     padding: 24px 20px 28px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow);
 }
 
 .auth-title {
@@ -58,18 +53,20 @@ body {
 .form-group label {
     font-size: 13px;
     margin-bottom: 4px;
+    color: var(--muted);
 }
 
 .form-group input {
     padding: 10px 12px;
-    border-radius: 6px;
-    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    border: 1px solid var(--border);
     font-size: 14px;
     outline: none;
+    background: #fff;
 }
 
 .form-group input:focus {
-    border-color: #0048b4;
+    border-color: var(--primary);
     box-shadow: 0 0 0 1px rgba(0,72,180,0.15);
 }
 
@@ -77,8 +74,8 @@ body {
 .auth-error {
     background: #ffe5e5;
     color: #a00000;
-    border-radius: 8px;
-    padding: 8px 10px;
+    border-radius: 10px;
+    padding: 10px 12px;
     margin-bottom: 12px;
     font-size: 12px;
 }
@@ -91,16 +88,18 @@ body {
 /* 下段の「Remember me」「パスワード忘れ」 */
 .form-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 8px 0 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
 }
+
 
 .remember-me {
     display: flex;
     align-items: center;
     font-size: 12px;
-    gap: 4px;
+    gap: 6px;
+    color: var(--muted);
 }
 
 .remember-me input {
@@ -109,7 +108,7 @@ body {
 
 .link-small {
     font-size: 12px;
-    color: #0048b4;
+    color: var(--primary);
     text-decoration: none;
 }
 
@@ -126,8 +125,8 @@ body {
     width: 100%;
     border: none;
     border-radius: 8px;
-    padding: 10px 0;
-    background: #0048b4;
+    padding: 12px 0;
+    background: var(--primary);
     color: #fff;
     font-size: 14px;
     font-weight: 600;
@@ -136,7 +135,7 @@ body {
 }
 
 .auth-submit-btn:hover {
-    background: #003890;
+    background: var(--primary-hover);
 }
 
 /* フッターの「新規登録」リンク */
@@ -144,8 +143,19 @@ body {
     margin-top: 14px;
     text-align: center;
     font-size: 12px;
+    color: var(--muted);
+
+    display: flex;
+    flex-direction: column;   /* ← 行分け */
+    gap: 6px;                 /* ← 行間 */
 }
 
-.form-footer span {
-    margin-right: 4px;
+.form-footer a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
 }
