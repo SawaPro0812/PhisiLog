@@ -10,7 +10,7 @@
 </head>
 <body>
     <header class="header">
-        <a href="{{ route('workouts.index') }}" class="back-btn">&lt;</a>
+        <a href="{{ route('workouts.index', ['date' => request('date')]) }}" class="back-btn">&lt;</a>
         <h1>Physilog</h1>
         <span class="menu-icon"></span>
     </header>
