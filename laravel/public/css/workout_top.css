@@ -1,50 +1,41 @@
+/* =========================================
+   Base (workout_top)
+   ========================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+    --bg: #f7f9fb;
+    --text: #333;
+    --primary: #0048b4;
+    --primary-hover: #003890;
+    --card: #fff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.1);
+    --radius: 10px;
+    --muted: #666;
+}
+
 body {
-    font-family: 'Segoe UI', 'Hiragino Sans', sans-serif;
-    background-color: #f7f9fb;
-    color: #333;
+    font-family: 'Inter', 'Segoe UI', 'Hiragino Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
     margin: 0;
     padding: 0;
 }
 
-/* ===== ヘッダー ===== */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #0048b4;
-    color: #fff;
-    padding: 12px 20px;
-}
-
-.header h1 {
-    font-size: 20px;
-    margin: 0;
-}
-
-.header a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.header a:hover {
-    text-decoration: underline;
-}
-
 /* ===== メインレイアウト ===== */
 .main {
-    padding: 20px;
+    padding: 3%;
     max-width: 800px;
     margin: 0 auto;
 }
 
 /* ===== カレンダー ===== */
 .calendar-section {
-    background: #fff;
-    border-radius: 10px;
+    background: var(--card);
+    border-radius: var(--radius);
     padding: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow);
 }
 
 .month-header {
@@ -60,16 +51,16 @@ body {
 }
 
 .month-header button {
-    background: #0048b4;
+    background: var(--primary);
     color: #fff;
     border: none;
     padding: 5px 10px;
-    border-radius: 4px;
+    border-radius: 6px; /* 少しだけ統一感 */
     cursor: pointer;
 }
 
 .month-header button:hover {
-    background: #003890;
+    background: var(--primary-hover);
 }
 
 .calendar {
@@ -79,7 +70,7 @@ body {
 }
 
 .calendar th {
-    color: #666;
+    color: var(--muted);
     font-size: 13px;
     padding-bottom: 5px;
 }
@@ -91,13 +82,10 @@ body {
     transition: 0.2s;
 }
 
-/* TODO PC版はホバーあり スマホ版はホバーなし
-.calendar td:hover {
-    background-color: #eef3ff;
-} */
+/* PCだけhover入れたい場合は後でmedia queryでOK */
 
 .today {
-    background-color: #0048b4;
+    background-color: var(--primary);
     color: #fff;
 }
 
@@ -108,10 +96,10 @@ body {
 
 /* ===== 記録テーブル ===== */
 .record-section {
-    background: #fff;
-    border-radius: 10px;
+    background: var(--card);
+    border-radius: var(--radius);
     padding: 15px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow);
 }
 
 .record-header {
@@ -127,17 +115,17 @@ body {
 }
 
 .add-btn {
-    background: #0048b4;
+    background: var(--primary);
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px; /* 4px → 6px で他と寄せ */
     padding: 6px 12px;
     cursor: pointer;
     transition: background 0.2s;
 }
 
 .add-btn:hover {
-    background: #003890;
+    background: var(--primary-hover);
 }
 
 .record-table {

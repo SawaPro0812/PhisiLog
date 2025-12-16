@@ -1,3 +1,41 @@
+/* =========================================
+   Common (shared)
+   ========================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+    --primary: #0048b4;
+    --muted: #555;
+    --border: #ddd;
+    --footer-h: 56px;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ===== Header (Global) ===== */
+.header {
+    height: 56px;                 /* ← 高さを固定 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;              /* ← 縦paddingを排除 */
+    background-color: #0048b4;
+    color: #fff;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;             /* ← 太さを固定 */
+    line-height: 1;               /* ← 縦ブレ防止 */
+}
+
+.header a,
+.header .back-btn {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    line-height: 1;
+}
 
 /* フッターナビ */
 .footer-nav {
@@ -6,7 +44,8 @@
     left: 0;
     right: 0;
 
-    max-width: 430px;          /* スマホ幅 */
+    /* 横幅は“端末幅いっぱい”に。中のUIは均等割でOK */
+    width: 100%;
     margin: 0 auto;
 
     display: flex;
@@ -14,8 +53,8 @@
     align-items: center;
 
     background-color: #ffffff;
-    border-top: 1px solid #ddd;
-    padding: 8px 0;
+    border-top: 1px solid var(--border);
+    padding: 8px 0 calc(8px + var(--safe-bottom));
 
     font-size: 14px;
     z-index: 50;
@@ -25,16 +64,32 @@
     flex: 1;
     text-align: center;
     padding: 6px 0;
-    color: #555;
+    color: var(--muted);
     text-decoration: none;
 }
 
 .footer-item.active {
-    color: #0048b4;
+    color: var(--primary);
     font-weight: bold;
 }
 
 /* フッター分だけ下に余白確保（content が隠れないように） */
 .main {
-    padding-bottom: 60px; /* フッター高さぶん少し多めに */
+    padding-bottom: calc(var(--footer-h) + 12px + var(--safe-bottom));
+}
+
+/* PC表示時：フッターが気になる場合の“最小対策”
+   - PCでは固定を解除して、コンテンツ末尾に表示
+   ※ スマホ想定は維持しつつ、PCで邪魔にならないようにする
+*/
+@media (min-width: 768px) {
+    .footer-nav {
+        position: static;
+        border-top: none;
+        padding: 12px 0;
+        max-width: 800px;
+    }
+    .main {
+        padding-bottom: 24px;
+    }
 }
