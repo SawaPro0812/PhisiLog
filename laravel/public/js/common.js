@@ -7,11 +7,15 @@
  * ============================================================
  */
 
-$.ajaxSetup({
-    headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-    }
-});
+const csrfToken = $('meta[name="csrf-token"]').attr("content");
+
+if (csrfToken) {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": csrfToken
+        }
+    });
+}
 
 /**
  * GET通信（Promiseを返す）
