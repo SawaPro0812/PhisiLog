@@ -54,6 +54,7 @@ function addSet() {
                 step="0.01"
                 inputmode="decimal"
                 pattern="[0-9]*"
+                value="0"
                 required
             > kg
             <input
@@ -63,6 +64,7 @@ function addSet() {
                 placeholder="回数"
                 inputmode="decimal"
                 pattern="[0-9]*"
+                value="0"
                 required
             > 回
         </div>

@@ -8,7 +8,32 @@ let currentMonth = new Date().getMonth() + 1;
 const params = new URLSearchParams(window.location.search);
 let selectedDateFromUrl = params.get("date");
 
+// URLの日付がある場合は、その年月にカレンダーを合わせる（登録後に翌月の選択が戻らないバグ対策）
+if (selectedDateFromUrl) {
+    const m = String(selectedDateFromUrl).match(/(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})/);
+    if (m) {
+        currentYear = parseInt(m[1], 10);
+        currentMonth = parseInt(m[2], 10);
+    }
+}
+
+// その日付に既に登録済みのexercise_id（文字列で保持）
+let registeredExerciseIds = new Set();
+
+// ===============================================
+// カテゴリ/種目フィルタ用
+// ===============================================
+let _allExerciseOptions = null;         // 種目selectの全option（placeholder含む）
+let _allCategoryOptions = null;         // カテゴリselectの全option（元）
+let _categoryToExerciseIds = new Map(); // category => Set(exerciseId)
+
+// モーダルを開いたときの初期カテゴリ（カテゴリvalueに合わせる）
+const DEFAULT_CATEGORY = "胸";
+
 $(function(){
+    // カテゴリ選択 → 種目絞り込み 初期化
+    initExerciseCategoryFilter();
+
     // カレンダー初期表示
     createCalendar(currentYear, currentMonth);
 
@@ -52,7 +77,6 @@ $(function(){
         // 前月/翌月セルはクリック不可
         if ($cell.hasClass("prev-month") || $cell.hasClass("next-month")) return;
 
-        // ✅ ユーザー操作として扱う
         showWorkOut($cell, { userAction: true });
     });
 
@@ -111,12 +135,10 @@ function createCalendar(year, month) {
 
                 const thisDate = `${year}/${String(month).padStart(2,"0")}/${String(dayCount).padStart(2,"0")}`;
 
-                // ✅ URL指定があればその日を選択（自動選択なのでURLは消さない）
                 if (selectedDateFromUrl && normalizeDate(selectedDateFromUrl) === normalizeDate(thisDate)) {
                     showWorkOut($cell, { userAction: false });
                     $cell.addClass("today");
                 }
-                // ✅ URL指定がない場合のみ今日をハイライト
                 else if (
                     !selectedDateFromUrl &&
                     dayCount === today.getDate() &&
@@ -152,7 +174,6 @@ function selectDayInCurrentMonth(day) {
     }).first();
 
     if ($target.length) {
-        // ✅ 自動選択扱い
         showWorkOut($target, { userAction: false });
     }
 }
@@ -161,7 +182,6 @@ function selectDayInCurrentMonth(day) {
 // カレンダー日付クリック → トレーニング記録表示変更
 // ===============================================
 async function showWorkOut($cell, options = { userAction: false }) {
-    // ✅ ユーザー操作のときだけURL指定を解除
     if (options.userAction) {
         selectedDateFromUrl = null;
     }
@@ -185,6 +205,8 @@ async function showWorkOut($cell, options = { userAction: false }) {
 }
 
 function showModal() {
+    refreshCategoryOptions(DEFAULT_CATEGORY, true);
+    renderExercisesByCategory($("#exerciseCategory").val());
     $("#exerciseModal").modal("show");
 }
 
@@ -218,6 +240,9 @@ function updateWorkoutTable(data) {
     const $tbody = $(".record-table tbody");
     $tbody.empty();
 
+    registeredExerciseIds = new Set((data || []).map(w => String(w.exercise_id)));
+    refreshCategoryOptions();
+
     if (!data.length) {
         $tbody.append(`<tr><td colspan="4">この日の記録はありません</td></tr>`);
         return;
@@ -235,4 +260,153 @@ function updateWorkoutTable(data) {
             </tr>
         `);
     });
+}
+
+
+// ===============================================
+// カテゴリ選択 → 種目絞り込み
+// ===============================================
+function initExerciseCategoryFilter() {
+    const $exercise  = $("#exercise");
+    const $category  = $("#exerciseCategory");
+
+    if (!$exercise.length || !$category.length) return;
+
+    _allExerciseOptions = $exercise.find("option").clone();
+    _allCategoryOptions = $category.find("option").clone();
+
+    buildCategoryMapFromExerciseOptions();
+    refreshCategoryOptions(DEFAULT_CATEGORY, true);
+
+    $category.on("change", function () {
+        renderExercisesByCategory($(this).val());
+    });
+
+    renderExercisesByCategory($category.val());
+}
+
+function buildCategoryMapFromExerciseOptions() {
+    _categoryToExerciseIds = new Map();
+    if (!_allExerciseOptions) return;
+
+    _allExerciseOptions.each(function () {
+        const $opt = $(this);
+        const exerciseId = $opt.attr("value");
+        const cat = $opt.data("category");
+
+        if (!exerciseId || !cat) return;
+
+        const key = String(cat);
+        if (!_categoryToExerciseIds.has(key)) {
+            _categoryToExerciseIds.set(key, new Set());
+        }
+        _categoryToExerciseIds.get(key).add(String(exerciseId));
+    });
+}
+
+function categoryHasRemainingExercises(category) {
+    const key = String(category);
+    const set = _categoryToExerciseIds.get(key);
+    if (!set || set.size === 0) return false;
+
+    for (const exId of set) {
+        if (!registeredExerciseIds.has(String(exId))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function refreshCategoryOptions(preferredCategory = null, forcePreferred = false) {
+    const $category = $("#exerciseCategory");
+    const $exercise = $("#exercise");
+    const $nextBtn  = $("#nextButton");
+
+    if (!$category.length || !$exercise.length) return;
+    if (!_allCategoryOptions) _allCategoryOptions = $category.find("option").clone();
+
+    const prevSelected = $category.val();
+
+    $category.empty();
+
+    let appendedCount = 0;
+
+    _allCategoryOptions.each(function () {
+        const $opt = $(this);
+        const val = $opt.attr("value");
+
+        // 「すべて（空value）」は出さない
+        if (!val) return;
+
+        // カテゴリ内の種目を全部使い切ったら、そのカテゴリは非表示
+        if (!categoryHasRemainingExercises(val)) return;
+
+        $category.append($opt.clone());
+        appendedCount++;
+    });
+
+    if (appendedCount === 0) {
+        $category.append(`<option value="" disabled>追加できるカテゴリがありません</option>`);
+        $category.prop("disabled", true);
+        $exercise.prop("disabled", true);
+        if ($nextBtn.length) $nextBtn.prop("disabled", true);
+        return;
+    }
+
+    $category.prop("disabled", false);
+    $exercise.prop("disabled", false);
+    if ($nextBtn.length) $nextBtn.prop("disabled", false);
+
+    const hasPreferred = preferredCategory && $category.find(`option[value="${preferredCategory}"]`).length > 0;
+    const hasPrev = $category.find(`option[value="${prevSelected}"]`).length > 0;
+
+    let newSelected = null;
+
+    if (forcePreferred && hasPreferred) {
+        newSelected = preferredCategory;
+    } else if (hasPrev) {
+        newSelected = prevSelected;
+    } else if (hasPreferred) {
+        newSelected = preferredCategory;
+    } else {
+        newSelected = $category.find("option").first().attr("value");
+    }
+
+    $category.val(newSelected);
+}
+
+function renderExercisesByCategory(category) {
+    const $exercise  = $("#exercise");
+    const $category  = $("#exerciseCategory");
+
+    if (!$exercise.length || !$category.length) return;
+    if (!_allExerciseOptions) _allExerciseOptions = $exercise.find("option").clone();
+
+    $exercise.empty();
+
+    if (!category) {
+        $exercise.append(`<option value="">選択してください</option>`);
+        $exercise.val("");
+        return;
+    }
+
+    _allExerciseOptions.each(function () {
+        const $opt = $(this);
+        const val = $opt.attr("value");
+
+        if (!val) {
+            $exercise.append($opt.clone());
+            return;
+        }
+
+        if (registeredExerciseIds.has(String(val))) {
+            return;
+        }
+
+        if ($opt.data("category") == category) {
+            $exercise.append($opt.clone());
+        }
+    });
+
+    $exercise.val("");
 }
