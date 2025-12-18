@@ -56,6 +56,11 @@ class ExerciseController extends Controller
         ];
 
         $data = $this->service->updateExercise($param);
+
+        if (!$data) {
+            return response()->json(['status' => 'error', 'message' => 'not found'], 404);
+        }
+
         return response()->json([
             'status'   => 'success',
             'exercise' => $data,
@@ -72,9 +77,14 @@ class ExerciseController extends Controller
             'id' => $request->id,
         ];
         $data = $this->service->deleteExercise($param);
+
+        if (!$data) {
+            return response()->json(['status' => 'error', 'message' => 'not found'], 404);
+        }
+
         return response()->json([
             'status'   => 'success',
-            'exercise' => $data,
+            'deleted_id' => $data,
         ]);
     }
 }

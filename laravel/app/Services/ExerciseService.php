@@ -18,8 +18,8 @@ class ExerciseService
     }
 
     // 種目を取得する
-    public function getExercise($exerciseId) {
-        $exercise = UserExercise::where('id', $exerciseId)->first();
+    public function getExercise($param) {
+        $exercise = UserExercise::where('id', $param['exerciseId'])->where('user_id', $param['userId'])->first();
         return $exercise;
     }
 
@@ -41,10 +41,7 @@ class ExerciseService
             ->first();
         
         if (!$exercise) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'not found'
-            ], 404);
+            return null;
         }
 
         $exercise->name = $param['name'];
@@ -61,14 +58,11 @@ class ExerciseService
             ->first();
 
         if (!$exercise) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'not found'
-            ], 404);
+            return null;
         }
 
         $exercise->delete();
 
-        return 'ok';
+        return $param['id'];
     }
 }

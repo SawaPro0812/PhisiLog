@@ -32,8 +32,14 @@ class WorkoutController extends Controller
     // ワークアウト登録画面表示
     public function create(Request $request): View
     {
+        $userId = Auth::id();
+        $param = [
+            'userId' => $userId,
+            'exerciseId' => $request->exercise_id,
+        ];
+
         $data = [
-            'exercise' => $this->service->getCreateData($request->exercise_id),
+            'exercise' => $this->service->getCreateData($param),
             'date' => $request->date,
             'memo' => null //ダミー
         ];
@@ -89,7 +95,7 @@ class WorkoutController extends Controller
         $workout = $this->service->getWorkoutData($param);
         $data = [
             'workout' => $workout,
-            'exercise' => $this->service->getCreateData($request->exercise_id),
+            'exercise' => $this->service->getCreateData($param),
             'date' => $request->date,
             'memo' => $workout->first()->memo ?? null
         ];

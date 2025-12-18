@@ -25,10 +25,10 @@ class CommonService
         ];
     }
 
-    // ワークアウト登録画面のデータ取得
-    public function getCreateData($exerciseId)
+    // 種目取得
+    public function getCreateData($param)
     {
-        return $this->exerciseService->getExercise($exerciseId);
+        return $this->exerciseService->getExercise($param);
     }
 
     // ワークアウト登録処理
@@ -45,12 +45,6 @@ class CommonService
 
     // ワークアウト編集画面のデータ取得
     public function getWorkoutData($param)
-    {
-        return $this->workoutService->getWorkoutData($param);
-    }
-
-    // 種目取得
-    public function getExercise($param)
     {
         return $this->workoutService->getWorkoutData($param);
     }
