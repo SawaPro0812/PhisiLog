@@ -15,6 +15,7 @@ class ExerciseController extends Controller
     {
         $this->service = $service;
     }
+
     // 種目登録画面表示
     public function create(Request $request): View
     {
@@ -30,29 +31,41 @@ class ExerciseController extends Controller
     // 種目登録処理
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:50'],
+            'category' => ['required', 'string', 'max:20'],
+        ]);
+
         $userId = Auth::id();
         $param = [
             'userId' => $userId,
-            'name' => $request->name,
-            'category' => $request->category,
+            'name' => $validated['name'],
+            'category' => $validated['category'],
         ];
 
         $data = $this->service->createExercise($param);
+
         return response()->json([
             'status'   => 'success',
-            'exercise' => $param,
+            'exercise' => $data,
         ]);
     }
 
     // 種目編集処理
     public function update(Request $request)
     {
+        $validated = $request->validate([
+            'id' => ['required', 'integer'],
+            'name' => ['required', 'string', 'max:50'],
+            'category' => ['required', 'string', 'max:20'],
+        ]);
+
         $userId = Auth::id();
         $param = [
             'userId' => $userId,
-            'id' => $request->id,
-            'name' => $request->name,
-            'category' => $request->category,
+            'id' => $validated['id'],
+            'name' => $validated['name'],
+            'category' => $validated['category'],
         ];
 
         $data = $this->service->updateExercise($param);
@@ -64,18 +77,22 @@ class ExerciseController extends Controller
         return response()->json([
             'status'   => 'success',
             'exercise' => $data,
-            'param' => $param
         ]);
     }
 
     // 種目削除処理
     public function delete(Request $request)
     {
+        $validated = $request->validate([
+            'id' => ['required', 'integer'],
+        ]);
+
         $userId = Auth::id();
         $param = [
             'userId' => $userId,
-            'id' => $request->id,
+            'id' => $validated['id'],
         ];
+
         $data = $this->service->deleteExercise($param);
 
         if (!$data) {
@@ -83,7 +100,7 @@ class ExerciseController extends Controller
         }
 
         return response()->json([
-            'status'   => 'success',
+            'status' => 'success',
             'deleted_id' => $data,
         ]);
     }
