@@ -54,11 +54,15 @@
                            name="sets[0][weight]"
                            class="input-weight"
                            placeholder="重量"
+                           inputmode="decimal"
+                           pattern="[0-9]*"
                            required> kg
                     <input type="number"
                            name="sets[0][reps]"
                            class="input-reps"
                            placeholder="回数"
+                           inputmode="decimal"
+                           pattern="[0-9]*"
                            required> 回
                 </div>
             @endforelse
@@ -66,18 +70,18 @@
             {{-- 新規登録時：元の仕様どおり 3 セット分の空フォーム --}}
             <div class="set-row">
                 <label class="set-label">セット 1</label>
-                <input type="number" name="sets[0][weight]" class="input-weight" placeholder="重量" required> kg
-                <input type="number" name="sets[0][reps]" class="input-reps" placeholder="回数" required> 回
+                <input type="number" name="sets[0][weight]" class="input-weight" placeholder="重量" value="0" inputmode="decimal" pattern="[0-9]*" required> kg
+                <input type="number" name="sets[0][reps]" class="input-reps" placeholder="回数" value="0" inputmode="decimal" pattern="[0-9]*" required> 回
             </div>
             <div class="set-row">
                 <label class="set-label">セット 2</label>
-                <input type="number" name="sets[1][weight]" class="input-weight" placeholder="重量" required> kg
-                <input type="number" name="sets[1][reps]" class="input-reps" placeholder="回数" required> 回
+                <input type="number" name="sets[1][weight]" class="input-weight" placeholder="重量" value="0" inputmode="decimal" pattern="[0-9]*" required> kg
+                <input type="number" name="sets[1][reps]" class="input-reps" placeholder="回数" value="0" inputmode="decimal" pattern="[0-9]*" required> 回
             </div>
             <div class="set-row">
                 <label class="set-label">セット 3</label>
-                <input type="number" name="sets[2][weight]" class="input-weight" placeholder="重量" required> kg
-                <input type="number" name="sets[2][reps]" class="input-reps" placeholder="回数" required> 回
+                <input type="number" name="sets[2][weight]" class="input-weight" placeholder="重量" value="0" inputmode="decimal" pattern="[0-9]*" required> kg
+                <input type="number" name="sets[2][reps]" class="input-reps" placeholder="回数" value="0" inputmode="decimal" pattern="[0-9]*" required> 回
             </div>
         @endif
     </div>
